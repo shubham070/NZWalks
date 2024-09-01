@@ -22,7 +22,7 @@ builder.Services.AddDbContext<NZWalksAuthDbContext>(options =>
 builder.Services.AddIdentityCore<IdentityUser>()
         .AddRoles<IdentityRole>()
         .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("AuthProv")
-        .AddEntityFrameworkStores<NZWalksDbContext>()
+        .AddEntityFrameworkStores<NZWalksAuthDbContext>()
         .AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options =>

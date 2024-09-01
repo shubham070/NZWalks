@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NZWalks.Data
 {
-    public class NZWalksAuthDbContext : IdentityDbContext
+    public class NZWalksAuthDbContext : IdentityDbContext<IdentityUser>
     {
         public NZWalksAuthDbContext(DbContextOptions<NZWalksAuthDbContext> options) : base (options)
         {
