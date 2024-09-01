@@ -8,6 +8,7 @@ namespace NZWalks.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
+        [HttpGet]
         public IActionResult GetAllStudents()
         {
             string[] studentNames = new string[] { "A", "B", "C", "D" };
