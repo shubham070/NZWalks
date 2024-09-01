@@ -1,0 +1,10 @@
+-- commands to run the db migrations
+1. open nuget manager console : => go to Tools => Nuget Package Manager => Package Manager Console. 
+
+*** execute below commands one by one 
+
+--to create migration scripts
+2. Add-Migration "Name of Migration"
+
+--to apply migrations
+3. update-Database
