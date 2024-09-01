@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<NZWalksDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("")));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksConnectionString")));
 
 var app = builder.Build();
 
