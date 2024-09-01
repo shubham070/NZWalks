@@ -8,7 +8,6 @@ namespace NZWalks.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext _context;
@@ -19,6 +18,7 @@ namespace NZWalks.Controllers
 
         [HttpGet]
         [Route("GetAllRegions")]
+        [Authorize(Roles = "Writer,Reader")]
         public IActionResult GetAll()
         {
             var regions = _context.Regions.ToList();
@@ -27,6 +27,7 @@ namespace NZWalks.Controllers
 
         [HttpGet]
         [Route("GetRegionById/{Id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public IActionResult GetRegionByGuid([FromRoute] Guid Id)
         {
             var regions = _context.Regions.FirstOrDefault(_=>_.Id.Equals(Id));
