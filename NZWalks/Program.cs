@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Principal;
+using NZWalks.Repository;
+using NZWalks.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ builder.Services.AddIdentityCore<IdentityUser>()
         .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("AuthProv")
         .AddEntityFrameworkStores<NZWalksAuthDbContext>()
         .AddDefaultTokenProviders();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

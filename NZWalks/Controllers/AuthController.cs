@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.Models.DTO;
+using NZWalks.Repository;
 
 namespace NZWalks.Controllers
 {
@@ -10,9 +11,12 @@ namespace NZWalks.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-        public AuthController(UserManager<IdentityUser> userManager)
+        private readonly ITokenRepository _tokenRepository;
+
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
         {
-            this._userManager = userManager;
+            _userManager = userManager;
+            _tokenRepository = tokenRepository;
         }
 
         [HttpPost]
@@ -25,7 +29,7 @@ namespace NZWalks.Controllers
                 Email =  registerRequestDto.UserName
             };
 
-            var identityResult = await this._userManager.CreateAsync(identityUser,registerRequestDto.Password);
+            var identityResult = await _userManager.CreateAsync(identityUser,registerRequestDto.Password);
 
             if(identityResult.Succeeded)
             {
@@ -48,10 +52,14 @@ namespace NZWalks.Controllers
 
             if( user != null)
             {
+
                 var checkPassword = _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
                 if(checkPassword != null)
                 {
-                   return Ok("Login Successfull");
+                    var roles = await _userManager.GetRolesAsync(user);
+                    var jwtToken = _tokenRepository.CreateJWTToken(user, roles.ToList());
+
+                   return Ok(jwtToken);
                 }
             }
             return BadRequest("Something Went Wrong");
